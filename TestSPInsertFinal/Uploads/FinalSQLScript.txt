@@ -1,0 +1,369 @@
+USE [master]
+GO
+/****** Object:  Database [PractiseDB]    Script Date: 30-11-2023 17:06:22 ******/
+CREATE DATABASE [PractiseDB]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'PractiseDB', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\PractiseDB.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'PractiseDB_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\PractiseDB_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
+GO
+ALTER DATABASE [PractiseDB] SET COMPATIBILITY_LEVEL = 160
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [PractiseDB].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [PractiseDB] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [PractiseDB] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [PractiseDB] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [PractiseDB] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [PractiseDB] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [PractiseDB] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [PractiseDB] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [PractiseDB] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [PractiseDB] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [PractiseDB] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [PractiseDB] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [PractiseDB] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [PractiseDB] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [PractiseDB] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [PractiseDB] SET  ENABLE_BROKER 
+GO
+ALTER DATABASE [PractiseDB] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [PractiseDB] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [PractiseDB] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [PractiseDB] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [PractiseDB] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [PractiseDB] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [PractiseDB] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [PractiseDB] SET RECOVERY FULL 
+GO
+ALTER DATABASE [PractiseDB] SET  MULTI_USER 
+GO
+ALTER DATABASE [PractiseDB] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [PractiseDB] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [PractiseDB] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [PractiseDB] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [PractiseDB] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [PractiseDB] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'PractiseDB', N'ON'
+GO
+ALTER DATABASE [PractiseDB] SET QUERY_STORE = ON
+GO
+ALTER DATABASE [PractiseDB] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
+GO
+USE [PractiseDB]
+GO
+/****** Object:  Table [dbo].[Check]    Script Date: 30-11-2023 17:06:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Check](
+	[SerialNumber] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](max) NULL,
+ CONSTRAINT [PK_Check] PRIMARY KEY CLUSTERED 
+(
+	[SerialNumber] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Logs]    Script Date: 30-11-2023 17:06:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Logs](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Message] [nvarchar](max) NULL,
+	[MessageTemplate] [nvarchar](max) NULL,
+	[Level] [nvarchar](max) NULL,
+	[TimeStamp] [datetime] NULL,
+	[Exception] [nvarchar](max) NULL,
+	[Properties] [nvarchar](max) NULL,
+	[MachineName] [varchar](128) NULL,
+	[ProcessID] [varchar](128) NULL,
+	[ThreadID] [varchar](128) NULL,
+ CONSTRAINT [PK_Logs] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Test]    Script Date: 30-11-2023 17:06:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Test](
+	[Serial] [uniqueidentifier] NULL,
+	[Id] [int] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[User]    Script Date: 30-11-2023 17:06:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[User](
+	[serialNumber] [int] IDENTITY(1,1) NOT NULL,
+	[userID] [uniqueidentifier] NOT NULL,
+	[firstName] [nvarchar](50) NOT NULL,
+	[lastName] [nvarchar](50) NOT NULL,
+	[email] [nvarchar](50) NOT NULL,
+	[password] [nvarchar](max) NOT NULL,
+	[isActive] [bit] NOT NULL,
+	[passwordSalt] [nvarchar](max) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[serialNumber] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[UserDetails]    Script Date: 30-11-2023 17:06:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UserDetails](
+	[serialNumber] [int] IDENTITY(1,1) NOT NULL,
+	[userID] [uniqueidentifier] NULL,
+	[address] [nvarchar](max) NULL,
+	[city] [nvarchar](100) NULL,
+	[state] [nvarchar](50) NULL,
+	[postalCode] [nvarchar](50) NULL,
+	[DOB] [date] NULL,
+	[age] [int] NULL,
+	[contactNumber] [nvarchar](15) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[serialNumber] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[User] ADD  DEFAULT ((1)) FOR [isActive]
+GO
+ALTER TABLE [dbo].[UserDetails]  WITH CHECK ADD FOREIGN KEY([serialNumber])
+REFERENCES [dbo].[User] ([serialNumber])
+GO
+/****** Object:  StoredProcedure [dbo].[CheckEmailExists]    Script Date: 30-11-2023 17:06:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[CheckEmailExists]
+    @email NVARCHAR(50),
+    @emailExists BIT OUTPUT
+AS
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM [User]
+        WHERE email = @email AND isActive=1
+    )
+    BEGIN
+        SET @emailExists = 1;
+    END
+    ELSE
+    BEGIN
+        SET @emailExists = 0;
+    END
+END;
+select * from [UserDetails]
+GO
+/****** Object:  StoredProcedure [dbo].[CheckUserActive]    Script Date: 30-11-2023 17:06:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[CheckUserActive]
+    @email nvarchar(50),
+    @userActive BIT OUTPUT
+AS
+BEGIN
+    -- Check if the isActive column is 1 (True)
+    SELECT @userActive = CASE WHEN isActive = 1 THEN 1 ELSE 0 END
+    FROM [User]
+    WHERE email = @email;
+
+    -- If the @userActive is NULL, set it to 0 (False)
+    IF @userActive IS NULL
+        SET @userActive = 0;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[DeactivateUser]    Script Date: 30-11-2023 17:06:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[DeactivateUser]
+    @email nvarchar(50)
+AS
+BEGIN
+    UPDATE [User]
+    SET isActive = 0
+    WHERE email = @email;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[GetOneUserData]    Script Date: 30-11-2023 17:06:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetOneUserData]
+ @email nvarchar(50)
+AS
+BEGIN
+    SELECT u.serialNumber, 
+           u.userID, 
+           u.firstName, 
+           u.lastName, 
+           u.email, 
+           d.address, 
+           d.city, 
+           d.state, 
+           d.postalCode, 
+           d.DOB, 
+           d.age, 
+           d.contactNumber
+    FROM [User] u
+    INNER JOIN UserDetails d ON u.userID = d.userID
+	where u.email=@email and u.isActive=1;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[GetUserData]    Script Date: 30-11-2023 17:06:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- Create a stored procedure to retrieve data from User and UserDetails tables
+CREATE PROCEDURE [dbo].[GetUserData]
+AS
+BEGIN
+    SELECT u.serialNumber, 
+           u.userID, 
+           u.firstName, 
+           u.lastName, 
+           u.email, 
+           d.address, 
+           d.city, 
+           d.state, 
+           d.postalCode, 
+           d.DOB, 
+           d.age, 
+           d.contactNumber
+    FROM [User] u
+    INNER JOIN UserDetails d ON u.userID = d.userID;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[GetUserPassword]    Script Date: 30-11-2023 17:06:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE procedure [dbo].[GetUserPassword]
+@email nvarchar(50),
+@password nvarchar(MAX) Output
+
+AS
+BEGIN
+
+Select @password=password from [User] 
+where email=@email;
+
+End;
+GO
+/****** Object:  StoredProcedure [dbo].[InsertUserData]    Script Date: 30-11-2023 17:06:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[InsertUserData]
+    @userID uniqueidentifier,
+    @firstName nvarchar(50),
+    @lastName nvarchar(50),
+	@email nvarchar(50),
+	@password nvarchar(50),
+    @address nvarchar(MAX),
+    @city nvarchar(100),
+    @state nvarchar(50),
+    @postalCode nvarchar(50),
+    @dOB datetime,
+    @age int,
+    @contactNumber nvarchar(15)
+AS
+BEGIN
+
+    INSERT INTO [User] ( userID, firstName, lastName,email,password)
+    VALUES ( @userID, @firstName, @lastName,@email,@password)
+ 
+    IF EXISTS (SELECT 1 FROM [User] WHERE userID = @userID)
+    BEGIN
+  
+        INSERT INTO UserDetails (userID, address, city, state, postalCode, DOB, age, contactNumber)
+        VALUES ( @userID, @address, @city, @state, @postalCode, @DOB, @age, @contactNumber)
+    END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[UpdateUserDetails]    Script Date: 30-11-2023 17:06:22 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[UpdateUserDetails]
+    @email NVARCHAR(50),
+    @address NVARCHAR(MAX) = NULL,
+    @city NVARCHAR(100) = NULL,
+    @state NVARCHAR(50) = NULL,
+    @postalCode NVARCHAR(50) = NULL,
+    @DOB DATE = NULL,
+    @age INT = NULL,
+    @contactNumber NVARCHAR(15) = NULL
+AS
+BEGIN
+    UPDATE UserDetails
+    SET
+        address = ISNULL(@address, address),
+        city = ISNULL(@city, city),
+        state = ISNULL(@state, state),
+        postalCode = ISNULL(@postalCode, postalCode),
+        DOB = ISNULL(@DOB, DOB),
+        age = ISNULL(@age, age),
+        contactNumber = ISNULL(@contactNumber, contactNumber)
+    WHERE UserID = (SELECT UserID FROM [User] WHERE email = @email and isActive=1);
+END;
+GO
+USE [master]
+GO
+ALTER DATABASE [PractiseDB] SET  READ_WRITE 
+GO
